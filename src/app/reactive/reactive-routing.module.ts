@@ -5,21 +5,31 @@ import { DynamicPageComponent } from './pages/dynamic-page/dynamic-page.componen
 import { SwitchesPageComponent } from './pages/switches-page/switches-page.component';
 
 const routes: Routes = [
+  // {
+  //   path: 'basic',
+  //   component: BasicPageComponent
+  // },
+  // {
+  //   path: 'dynamic',
+  //   component: DynamicPageComponent
+  // },
+  // {
+  //   path: 'switches',
+  //   component: DynamicPageComponent
+  // },
+  // {
+  //   path: '**',
+  //   redirectTo: 'basic'
+  // }
+
   {
-    path: 'basic',
-    component: BasicPageComponent
-  },
-  {
-    path: 'dynamic',
-    component: DynamicPageComponent
-  },
-  {
-    path: 'switches',
-    component: DynamicPageComponent
-  },
-  {
-    path: '**',
-    redirectTo: 'basic'
+    path: '',
+    children: [
+      { path: 'basic', component: BasicPageComponent },
+      { path: 'dynamic', component: DynamicPageComponent },
+      { path: 'switches', component: SwitchesPageComponent },
+      { path: '**', redirectTo: 'basic' }
+    ]
   }
 ];
 
