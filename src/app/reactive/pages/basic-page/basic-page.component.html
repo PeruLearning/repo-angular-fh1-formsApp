@@ -18,9 +18,8 @@
             placeholder="Nombre del producto"
             formControlName="name">
 
-          <span class="form-text text-danger">
-            <!-- Debe de ser de 3 letras -->
-            error message
+          <span class="form-text text-danger" *ngIf="isInValidField('name')">
+            {{ getFieldError('name') }}
           </span>
         </div>
       </div>
@@ -34,8 +33,8 @@
             class="form-control"
             placeholder="Precio del producto"
             formControlName="price">
-          <span class="form-text text-danger">
-            El precio debe de ser 0 o mayor
+          <span class="form-text text-danger" *ngIf="isInValidField('price')">
+            {{ getFieldError('price') }}
           </span>
         </div>
       </div>
@@ -75,7 +74,7 @@
 
 
 
-<div class="row">
+<!-- <div class="row">
   <div class="col">
 
     <span>Valid</span>
@@ -102,4 +101,4 @@
     <span>Stock - Errors</span>
     <pre>{{ myForm.controls['stock'].errors | json }}</pre>
   </div>
-</div>
+</div> -->
