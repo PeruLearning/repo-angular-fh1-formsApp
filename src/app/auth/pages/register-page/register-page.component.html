@@ -30,7 +30,7 @@
             placeholder="Email del usuario"
             formControlName="email">
           <span class="form-text text-danger" *ngIf="isInValidField('email')">
-            Correo electrónico no válido
+            {{getFieldError('email')}}
           </span>
         </div>
       </div>

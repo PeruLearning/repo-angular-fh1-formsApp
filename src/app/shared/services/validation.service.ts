@@ -28,14 +28,25 @@ export class ValidationService {
   public getFieldError(form: FormGroup, field: string): string | null {
     if (!form.contains(field)) return null;
 
-    const errors: ValidationErrors = form.controls[field].errors || {};
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required': return 'Este dato es requerido';
+    const controlErrors: ValidationErrors = form.controls[field].errors || {};
+    if (!controlErrors) return null;
 
-        case 'minlength': return `Debe tener como mínimo ${errors['minlength'].requiredLength} caracteres. Actual: (${errors['minlength'].actualLength}).`;
+    const errorMessages = {
+      required: 'Este dato es requerido',
+      minlength: (errors: any) => `Debe tener como mínimo ${errors.requiredLength} caracteres. Actual: (${errors.actualLength}).`,
+      maxlength: (errors: any) => `Debe tener como máximo ${errors.requiredLength} caracteres. Actual: (${errors.actualLength}).`,
+      min: (errors: any) => `Debe ser mayor o igual a ${errors.min}. Actual: (${errors.actual}).`,
+      max: (errors: any) => `Debe ser menor o igual a ${errors.max}. Actual: (${errors.actual}).`,
+      pattern: 'El formato es incorrecto',
+      email: 'El correo electrónico no es válido',
+      emailIsTaken: (errors: any) => errors,
+    };
 
-        case 'min': return `Debe ser mayor o igual a ${errors['min'].min}. Actual: (${errors['min'].actual})`
+    for (const [errorKey, errorMessage] of Object.entries(errorMessages)) {
+      if (controlErrors[errorKey]) {
+        return typeof errorMessage === 'function'
+          ? errorMessage(controlErrors[errorKey])
+          : errorMessage;
       }
     }
 
