@@ -29,21 +29,8 @@ export class BasicPageComponent {
     return this.validationService.isInvalidField(this.myForm, field);
   }
 
-  public getFieldError(fieldName: string): string | null {
-    if (!this.myForm.contains(fieldName)) return null;
-
-    const errors: ValidationErrors = this.myForm.controls[fieldName].errors || {};
-    for (const key of Object.keys(errors)) {
-      switch (key) {
-        case 'required': return 'Este dato es requerido';
-
-        case 'minlength': return `Debe tener como mínimo ${errors['minlength'].requiredLength} caracteres. Actual: (${errors['minlength'].actualLength}).`;
-
-        case 'min': return `Debe ser mayor o igual a ${errors['min'].min}. Actual: (${errors['min'].actual})`
-      }
-    }
-
-    return null;
+  public getFieldError(field: string): string | null {
+    return this.validationService.getFieldError(this.myForm, field);
   }
 
   public onSave(): void {

@@ -15,7 +15,7 @@
             placeholder="Nombre del usuario"
             formControlName="name">
           <span class="form-text text-danger" *ngIf="isInValidField('name')">
-            Debe de ser en formato de nombre y apellido
+            Debe ingresar nombre y apellido
           </span>
         </div>
       </div>
@@ -45,7 +45,7 @@
             placeholder="Nombre código del usuario"
             formControlName="username">
           <span class="form-text text-danger" *ngIf="isInValidField('username')">
-            El username no puede ser Strider
+            El username no puede ser 'strider'
           </span>
         </div>
       </div>
@@ -60,7 +60,7 @@
             placeholder="Password de su cuenta"
             formControlName="password">
           <span class="form-text text-danger" *ngIf="isInValidField('password')">
-            La contraseña debe de ser mayor de 6 caracteres.
+            La contraseña debe tener al menos 6 caracteres
           </span>
         </div>
       </div>
