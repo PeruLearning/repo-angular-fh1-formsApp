@@ -23,9 +23,23 @@ export class DynamicPageComponent {
     ])
   });
 
+  public newFavorite: FormControl = new FormControl('', Validators.required);
+
   constructor(
     private fb: FormBuilder
   ) { }
+
+  public onAddToFavorites(): void {
+    if (this.newFavorite.invalid) {
+      return this.newFavorite.markAsTouched();
+    }
+
+    const newGame = this.newFavorite.value;
+    // this.favoriteGameControls.push(new FormControl(newGame, Validators.required));
+    this.favoriteGameControls.push(this.fb.control(newGame, Validators.required));
+
+    this.newFavorite.reset();
+  }
 
   public onDeleteFavorite(index: number): void {
     this.favoriteGameControls.removeAt(index);
@@ -37,6 +51,8 @@ export class DynamicPageComponent {
     }
 
     console.log(this.myForm.value);
+    // (this.myForm.controls['favoriteGames'] as FormArray) = this.fb.array([]);
+    this.myForm.controls['favoriteGames'] = new FormArray([]);
     this.myForm.reset();
   }
 
@@ -67,7 +83,7 @@ export class DynamicPageComponent {
     return null;
   }
 
-  public get favoriteGameControls() {
+  public get favoriteGameControls() : FormArray {
     return this.myForm.get('favoriteGames') as FormArray
   }
 }
