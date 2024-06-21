@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { ValidationService } from '../../../shared/services/validation.service';
 
 @Component({
   templateUrl: './basic-page.component.html',
@@ -20,12 +21,12 @@ export class BasicPageComponent {
   });
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private validationService: ValidationService
   ) { }
 
-  public isInValidField(fieldName: string): boolean | null {
-    return this.myForm.controls[fieldName].errors
-      && this.myForm.controls[fieldName].touched;
+  public isInValidField(field: string): boolean | null {
+    return this.validationService.isInvalidField(this.myForm, field);
   }
 
   public getFieldError(fieldName: string): string | null {

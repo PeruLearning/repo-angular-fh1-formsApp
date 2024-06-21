@@ -27,6 +27,6 @@ export class RegisterPageComponent {
   }
 
   public isInValidField(field: string) {
-    return this.validationService.isInValidField(this.myForm, field);
+    return this.validationService.isInvalidField(this.myForm, field);
   }
 }

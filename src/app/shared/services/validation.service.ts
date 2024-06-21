@@ -20,7 +20,7 @@ export class ValidationService {
     return null;
   }
 
-  public isInValidField(form: FormGroup, field: string): boolean | null {
+  public isInvalidField(form: FormGroup, field: string): boolean | null {
     return form.controls[field].errors
       && form.controls[field].touched;
   }
