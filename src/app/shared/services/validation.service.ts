@@ -51,7 +51,7 @@ export class ValidationService {
       const confirmPassword = formGroup.get(confirmPasswordField)?.value;
 
       if (password && confirmPassword && password !== confirmPassword) {
-        const errorMessage = 'La constraseña y so confirmación no coinciden.';
+        const errorMessage = 'La contraseña y su confirmación no coinciden.';
 
         const error = {
           confirmPasswordMismatch: errorMessage
