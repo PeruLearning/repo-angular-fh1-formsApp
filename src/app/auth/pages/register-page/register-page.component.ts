@@ -8,19 +8,24 @@ import { EmailValidatorService } from '../../../shared/services/validators/email
 })
 export class RegisterPageComponent {
 
-  public myForm: FormGroup = this.fb.group({
-    name: ['', [Validators.required, Validators.pattern(ValidationService.firstNameAndLastNamePattern), Validators.max(15)]],
-    email: ['', [Validators.required, Validators.pattern(ValidationService.emailPattern)], [this.emailValidatorService]],
-    username: ['', [Validators.required, this.validationService.cantBeStrider]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-    confirmPassword: ['', [Validators.required]]
-  });
+  public myForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private validationService: ValidationService,
     private emailValidatorService: EmailValidatorService,
-  ) { }
+  ) {
+
+    this.myForm = this.fb.group({
+      name: ['', [Validators.required, Validators.pattern(ValidationService.firstNameAndLastNamePattern), Validators.maxLength(15)]],
+      email: ['', [Validators.required, Validators.pattern(ValidationService.emailPattern)], [this.emailValidatorService.validate.bind(this.emailValidatorService)]],
+      username: ['', [Validators.required, this.validationService.cantBeStrider]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required]]
+    }, {
+      validators: [ValidationService.compareConfirmPassword('password', 'confirmPassword')]
+    });
+   }
 
   public onSubmit(): void {
     if (this.myForm.invalid) return this.myForm.markAllAsTouched();

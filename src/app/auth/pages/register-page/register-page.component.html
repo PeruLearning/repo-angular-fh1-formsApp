@@ -45,7 +45,7 @@
             placeholder="Nombre código del usuario"
             formControlName="username">
           <span class="form-text text-danger" *ngIf="isInValidField('username')">
-            El username no puede ser 'strider'
+             {{getFieldError('username')}}
           </span>
         </div>
       </div>
@@ -60,7 +60,7 @@
             placeholder="Password de su cuenta"
             formControlName="password">
           <span class="form-text text-danger" *ngIf="isInValidField('password')">
-            La contraseña debe tener al menos 6 caracteres
+            {{getFieldError('password')}}
           </span>
         </div>
       </div>
@@ -75,7 +75,8 @@
             placeholder="Confirmar la contraseña"
             formControlName="confirmPassword">
           <span class="form-text text-danger" *ngIf="isInValidField('confirmPassword')">
-            Las contraseñas deben de ser iguales
+            {{getFieldError('confirmPassword')}}
+             <!-- Las contraseñas no coinciden -->
           </span>
         </div>
       </div>
@@ -123,5 +124,8 @@
 <h5>Password</h5>
 <pre>{{ myForm.value.password| json }}</pre>
 
-<h5>Confirmar</h5>
+<h5>Confirmar Password</h5>
 <pre>{{ myForm.value.confirmPassword| json }}</pre>
+
+<h5>Confirmar Password - Errors</h5>
+<pre>{{ myForm.controls['confirmPassword'].errors| json }}</pre>

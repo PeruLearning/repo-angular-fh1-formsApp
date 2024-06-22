@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -8,17 +8,6 @@ export class ValidationService {
 
   public static firstNameAndLastNamePattern: string = '([a-zA-Z]+) ([a-zA-Z]+)';
   public static emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
-
-  public cantBeStrider = (control: FormControl): ValidationErrors | null => {
-    const value: string = control.value.trim().toLowerCase();
-    if (value === 'strider') {
-      return {
-        userIsTaken: true
-      }
-    }
-
-    return null;
-  }
 
   public isInvalidField(form: FormGroup, field: string): boolean | null {
     return form.controls[field].errors
@@ -39,7 +28,9 @@ export class ValidationService {
       max: (errors: any) => `Debe ser menor o igual a ${errors.max}. Actual: (${errors.actual}).`,
       pattern: 'El formato es incorrecto',
       email: 'El correo electrónico no es válido',
+      confirmPasswordMismatch: (errors: any) => errors,
       emailIsTaken: (errors: any) => errors,
+      userIsTaken: (errors: any) => errors
     };
 
     for (const [errorKey, errorMessage] of Object.entries(errorMessages)) {
@@ -47,6 +38,37 @@ export class ValidationService {
         return typeof errorMessage === 'function'
           ? errorMessage(controlErrors[errorKey])
           : errorMessage;
+      }
+    }
+
+    return null;
+  }
+
+  public static compareConfirmPassword(passwordField: string, confirmPasswordField: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const formGroup = control as FormGroup;
+      const password = formGroup.get(passwordField)?.value;
+      const confirmPassword = formGroup.get(confirmPasswordField)?.value;
+
+      if (password && confirmPassword && password !== confirmPassword) {
+        const errorMessage = 'La constraseña y so confirmación no coinciden.';
+
+        const error = {
+          confirmPasswordMismatch: errorMessage
+        }
+        formGroup.get(confirmPasswordField)?.setErrors(error);
+        return error;
+      }
+
+      return null;
+    };
+  }
+
+  public cantBeStrider = (control: FormControl): ValidationErrors | null => {
+    const value: string = control.value.trim().toLowerCase();
+    if (value === 'strider') {
+      return {
+        userIsTaken: `El usuario '${value}' ya existe.`
       }
     }
 

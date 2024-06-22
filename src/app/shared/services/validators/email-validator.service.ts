@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidator, ValidationErrors } from '@angular/forms';
-import { Observable, delay, map, of } from 'rxjs';
+import { Observable, catchError, delay, map, of } from 'rxjs';
 import { BackendService } from '../backend.service';
 
 @Injectable({
@@ -9,17 +9,6 @@ import { BackendService } from '../backend.service';
 export class EmailValidatorService implements AsyncValidator {
 
   constructor(private service: BackendService) {}
-
-  // validate(control: AbstractControl): Observable<ValidationErrors | null> {
-  //   const email = control.value
-
-  //   return of({
-  //     emilIsTaking: true
-  //   })
-  //     .pipe(
-  //     delay(2500)
-  //   );
-  // }
 
   // validate(control: AbstractControl): Observable<ValidationErrors | null> {
   //   const email = control.value
@@ -48,9 +37,9 @@ export class EmailValidatorService implements AsyncValidator {
     return this.service.checkEmail(email)
       .pipe(
         map(exists => {
-          return !exists ? null : {
-            emailIsTaken: 'Usuario ya existe en la Base de Datos'
-          }
+          return exists ? {
+            emailIsTaken: `El correo electrónico '${email}' ya existe.`
+          } : null;
         })
       );
   }
