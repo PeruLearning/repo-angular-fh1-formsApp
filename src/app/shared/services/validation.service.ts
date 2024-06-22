@@ -44,7 +44,7 @@ export class ValidationService {
     return null;
   }
 
-  public static compareConfirmPassword(passwordField: string, confirmPasswordField: string): ValidatorFn {
+  public compareConfirmPassword(passwordField: string, confirmPasswordField: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const formGroup = control as FormGroup;
       const password = formGroup.get(passwordField)?.value;

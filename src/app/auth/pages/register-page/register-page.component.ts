@@ -23,7 +23,7 @@ export class RegisterPageComponent {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
     }, {
-      validators: [ValidationService.compareConfirmPassword('password', 'confirmPassword')]
+      validators: [this.validationService.compareConfirmPassword('password', 'confirmPassword')]
     });
    }
 
