@@ -13,16 +13,19 @@ export class SwitchesPageComponent implements OnInit {
     wantNotifications: false
   }
 
-  public myForm: FormGroup = this.fb.group({
-    gender: ['M', Validators.required],
-    wantNotifications: [true, Validators.required],
-    termsAndConditions: [false, Validators.requiredTrue]
-  });
+  public myForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private validationService: ValidationService
-  ) { }
+  ) {
+
+    this.myForm = this.fb.group({
+      gender: ['M', Validators.required],
+      wantNotifications: [true, Validators.required],
+      termsAndConditions: [false, Validators.requiredTrue]
+    });
+   }
 
   public ngOnInit(): void {
     this.myForm.reset(this.person);
