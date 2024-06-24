@@ -3,7 +3,7 @@
 
 <h3 class="mt-3">Reactive</h3>
 <ul class="list-group">
-  <li *ngFor="let item of reactiveMenu"
+  <li *ngFor="let item of reactiveMenuItems"
     class="list-group-item"
     [routerLink]="[item.route]"
     routerLinkActive="active">
@@ -13,7 +13,7 @@
 
 <h3 class="mt-3">Validaciones</h3>
 <ul class="list-group">
-  <li *ngFor="let item of authMenu"
+  <li *ngFor="let item of authMenuItems"
     class="list-group-item"
     [routerLink]="[item.route]"
     routerLinkActive="active">

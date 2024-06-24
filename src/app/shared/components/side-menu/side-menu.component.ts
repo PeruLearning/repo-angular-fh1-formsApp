@@ -1,31 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuItem } from '../../interfaces/menu-item.interface';
+import { BackendService } from '../../services/backend.service';
+import { ModuleEnum } from '../../enums/module.enum';
 
 @Component({
   selector: 'shared-side-menu',
   templateUrl: './side-menu.component.html',
   styles: ``
 })
-export class SideMenuComponent {
-  public reactiveMenu: MenuItem[] = [
-    {
-      title: 'Básicos',
-      route: '/reactive/basic'
-    },
-    {
-      title: 'Dinámicos',
-      route: '/reactive/dynamic'
-    },
-    {
-      title: 'Switches',
-      route: '/reactive/switches'
-    },
-  ]
+export class SideMenuComponent implements OnInit {
+  private _reactiveMenuItems: MenuItem[] = [];
+  private _autMenuItems: MenuItem[] = [];
 
-  public authMenu: MenuItem[] = [
-    {
-      title: 'Registro',
-      route: 'auth/sign-up'
-    }
-  ]
+  constructor(private service: BackendService) {}
+
+  public ngOnInit(): void {
+    this.service.getMenuItemsByModule(ModuleEnum.reactive).subscribe((items) => {
+      this._reactiveMenuItems = items;
+    });
+
+    this.service.getMenuItemsByModule(ModuleEnum.auth).subscribe((items) => {
+      this._autMenuItems = items;
+    });
+
+  }
+
+  public get reactiveMenuItems(): MenuItem[] {
+    return [...this._reactiveMenuItems];
+  }
+
+  public get authMenuItems(): MenuItem[] {
+    return [...this._autMenuItems];
+  }
+
 }
