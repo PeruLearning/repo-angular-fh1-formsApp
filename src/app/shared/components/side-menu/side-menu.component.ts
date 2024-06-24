@@ -22,15 +22,16 @@ export class SideMenuComponent implements OnInit {
     this.service.getMenuItemsByModule(ModuleEnum.auth).subscribe((items) => {
       this._autMenuItems = items;
     });
-
   }
 
   public get reactiveMenuItems(): MenuItem[] {
-    return [...this._reactiveMenuItems];
+    // return [...this._reactiveMenuItems]; // spread operator sí funciona
+    return structuredClone(this._reactiveMenuItems);  // No funciona :(
   }
 
   public get authMenuItems(): MenuItem[] {
-    return [...this._autMenuItems];
+    // return [...this._autMenuItems];  // spread operator sí funciona
+    return structuredClone(this._autMenuItems); // No funciona :(
   }
 
 }
