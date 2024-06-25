@@ -25,13 +25,11 @@ export class SideMenuComponent implements OnInit {
   }
 
   public get reactiveMenuItems(): MenuItem[] {
-    // return [...this._reactiveMenuItems]; // spread operator sí funciona
-    return structuredClone(this._reactiveMenuItems);  // No funciona :(
+    return [...this._reactiveMenuItems];
   }
 
   public get authMenuItems(): MenuItem[] {
-    // return [...this._autMenuItems];  // spread operator sí funciona
-    return structuredClone(this._autMenuItems); // No funciona :(
+    return [...this._autMenuItems];
   }
 
 }
